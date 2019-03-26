@@ -13,6 +13,7 @@ export const fetchProducts = () => {
         ProductService.getProduct()
             .then(handleError)
             .then(res =>{
+                console.log(res)
                 if(res.success){
                     dispatch(fetchProductsSuccess(res.products));
                 }else{

@@ -4,9 +4,9 @@ import { fetchProducts } from "../../actions/productActions";
 
 const mapStateToProps = (state) => {
     return{
-        products: state.products.items || [],
-        loading: state.products.loading,
-        error: state.products.error
+        products: state.productReducer.products || [],
+        loading: state.productReducer.loading,
+        error: state.productReducer.error
     }
 };
 
