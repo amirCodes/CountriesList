@@ -1,22 +1,30 @@
 import { productService} from "../services/productsService";
-
+import { handleError } from '../errorHandler';
 export const FETCH_PRODUCTS_BEGIN = "FETCH_PRODUCTS_BEGIN";
 export const FETCH_PRODUCTS_SUCCESS = "FETCH_PRODUCTS_SUCCESS";
 export const FETCH_PRODUCTS_FAILURE = "FETCH_PRODUCTS_FAILURE";
 
 const ProductService = productService();
-
-export const fetchProducts =()=> {
+export const fetchProducts = () => {
     return dispatch => {
+
         dispatch(fetchProductsBegin());
-        return ProductService.getProduct()
-            .then(json => {
-                dispatch(fetchProductsSuccess(json.products));
-                return json.products;
+
+        ProductService.getProduct()
+            .then(handleError)
+            .then(res =>{
+                if(res.success){
+                    dispatch(fetchProductsSuccess(res.products));
+                }else{
+                    dispatch(fetchProductsFailure(res.status));
+                }
             })
-            .catch(error => dispatch(fetchProductsFailure(error)));
-    };
-}
+            .catch(err => {
+                console.log(err);
+                dispatch(fetchProductsFailure(parseInt(err.message)));
+            })
+    }
+};
 
 export const fetchProductsBegin = () => ({
     type: FETCH_PRODUCTS_BEGIN

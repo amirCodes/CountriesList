@@ -24,6 +24,7 @@ export default function productReducer(state = initialState, action) {
         case FETCH_PRODUCTS_SUCCESS:
             // All done: set loading "false".
             // Also, replace the items with the ones from the server
+            console.log(action)
             return {
                 ...state,
                 loading: false,

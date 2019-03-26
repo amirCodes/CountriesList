@@ -1,6 +1,7 @@
 import React from "react";
 class ProductList extends React.Component {
 
+
     componentDidMount() {
         const { fetchProducts } = this.props;
         fetchProducts();
